@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json", // This links it to your root rules
+  "compilerOptions": {
+    /* Vite's specific settings remain here */
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

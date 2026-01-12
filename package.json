@@ -1,0 +1,17 @@
+{
+  "name": "weather-app",
+  "packageManager": "yarn@4.10.3",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:backend": "yarn workspace backend dev",
+    "dev:frontend": "yarn workspace frontend dev",
+    "dev": "yarn workspaces foreach -Api run dev"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
