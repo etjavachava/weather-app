@@ -12,15 +12,21 @@ const handleWeatherError = (res: Response, error: unknown, context: string) => {
 };
 
 export const getDailyWeather=async (req:Request,res:Response)=>{
-     const city = req.query.city as string;
+     const { lat, lon, city } = req.query;
+     if (!city && (!lat || !lon)) {
+         return res.status(400).json({ error: "Please enter a valid city or allow geolocation" });
+     }
 const API_KEY=process.env.API_KEY;
     try{
+        const params: any = {
+            appid: API_KEY,
+            units: "metric"
+        };
+        if (city) params.q = city;
+        else { params.lat = lat; params.lon = lon; }
+
         const response=await axios.get(`${BASE_URL}/weather`,{
-params:{
-    q:city,
-    appid:API_KEY,
-    units:"metric"
-}
+            params
         })
         const data={
         temp: response.data.main.temp,
@@ -35,15 +41,21 @@ return res.json(data)
 }}
 
 export const getWeeklyWeather = async (req: Request, res: Response) => {
-const city = req.query.city as string;
+const { lat, lon, city } = req.query;
+     if (!city && (!lat || !lon)) {
+         return res.status(400).json({ error: "Please enter a valid city or allow geolocation" });
+     }
 const API_KEY=process.env.API_KEY;
     try{
+        const params: any = {
+            appid: API_KEY,
+            units: "metric"
+        };
+        if (city) params.q = city;
+        else { params.lat = lat; params.lon = lon; }
+
         const response=await axios.get(`${BASE_URL}/forecast`,{
-params:{
-    q:city,
-    appid:API_KEY,
-    units:"metric"
-}
+            params
         })
         const data = response.data.list
             .filter((item: any) => item.dt_txt.includes("12:00:00"))
